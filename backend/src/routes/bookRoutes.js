@@ -35,4 +35,34 @@ router.post("/", protectRoute, async (req, res) => {
   }
 });
 
+// pagination => infinite loading
+router.get("/", protectRoute, async (req, res) => {
+  // example call from react native - frontend
+  // const response = await fetch("http://localhost:3000/api/books?page=1&limit=5");
+  try {
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 2;
+    const skip = (page - 1) * limit;
+
+    const books = await Book.find()
+      .sort({ createdAt: -1 }) // desc
+      .skip(skip)
+      .limit(limit)
+      .populate("user", "username profileImage");
+
+    const totalBooks = await Book.countDocuments();
+
+    res.send({
+      books,
+      currentPage: page,
+      totalBooks,
+      totalPages: Math.ceil(totalBooks / limit),
+    });
+  } catch (error) {
+    console.log("Error in get all books route", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
 export default router;
