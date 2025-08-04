@@ -81,7 +81,7 @@ router.post("/login", async (req, res) => {
 
     const token = generateToken(user._id);
 
-    res.status(200).json({
+ res.status(200).json({
       token,
       user: {
         id: user._id,
@@ -90,10 +90,12 @@ router.post("/login", async (req, res) => {
         profileImage: user.profileImage,
         createdAt: user.createdAt,
       },
+  
     });
   } catch (error) {
     console.log("Error in login route", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 export default router;
