@@ -4,8 +4,9 @@ import SafeScreen from "../components/SafeScreen";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 
-import { useAuthStore } from "../store /authStore";
+// import { useAuthStore } from "../store/authStore";
 import { useEffect } from "react";
+import { useAuthStore } from "@/store /authStore";
 
 SplashScreen.preventAutoHideAsync();
 
